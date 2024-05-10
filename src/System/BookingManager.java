@@ -10,7 +10,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public interface BookingManager {
-    static Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
     Validator validator = new Validator();
     public default boolean book(int userId, boolean changeDate) {
         System.out.println("Available cities : ");
@@ -23,7 +23,7 @@ public interface BookingManager {
         }
         System.out.println("Enter the source city number : ");
         String sourceIndexString = sc.next();
-        while(!validator.validateInteger(sourceIndexString) || Integer.parseInt(sourceIndexString)<0 || Integer.parseInt(sourceIndexString)>CitiesData.getAvailableCities().size()){
+        while(!validator.validateInteger(sourceIndexString) || Integer.parseInt(sourceIndexString)<=0 || Integer.parseInt(sourceIndexString)>CitiesData.getAvailableCities().size()){
             System.out.println("Invalid source city Index. Enter again: ");
             sourceIndexString = sc.next();
         }
@@ -31,7 +31,7 @@ public interface BookingManager {
         String source = CitiesData.getAvailableCities().get(sourceIndex-1);
         System.out.println("Enter the destination city number : ");
         String destinationIndexString = sc.next();
-        while(!validator.validateInteger(destinationIndexString) || Integer.parseInt(destinationIndexString)<0 || Integer.parseInt(destinationIndexString)>CitiesData.getAvailableCities().size() || Integer.parseInt(destinationIndexString)==sourceIndex){
+        while(!validator.validateInteger(destinationIndexString) || Integer.parseInt(destinationIndexString)<=0 || Integer.parseInt(destinationIndexString)>CitiesData.getAvailableCities().size() || Integer.parseInt(destinationIndexString)==sourceIndex){
             System.out.println("Invalid destination city Index. Enter again: ");
             destinationIndexString = sc.next();
         }
@@ -86,15 +86,11 @@ public interface BookingManager {
 
         System.out.println("Enter number of seats you want to book : ");
         String noOfSeatsString = sc.next();
-        while(!validator.validateInteger(noOfSeatsString) || Integer.parseInt(noOfSeatsString)<0){
-            System.out.println("Invalid number of seats. No of seats should be between 10 and 50 Enter again: ");
+        while(!validator.validateInteger(noOfSeatsString) || Integer.parseInt(noOfSeatsString)<=0){
+            System.out.println("Invalid number of seats");
             noOfSeatsString = sc.next();
         }
         int noOfSeats = Integer.parseInt(noOfSeatsString);
-        while(noOfSeats<=0){
-            System.out.println("Invalid number of seats. Enter again: ");
-            noOfSeats = sc.nextInt();
-        }
         return book(userId, busId, source, destination, date, noOfSeats, startTime, matchedSchedules.get(busId), changeDate);
     }
     public default boolean book(int userId, int busId, String source, String destination, String date, int noOfSeats, String startTime, Schedule_SourceDestinationTimeDaysPair schedule, boolean changeDate) {
@@ -289,7 +285,7 @@ public interface BookingManager {
             return;
         System.out.println("Enter booking id to change date: ");
         String bookingIdString = sc.next();
-        while(!validator.validateInteger(bookingIdString)){
+        while(!validator.validateInteger(bookingIdString) || Integer.parseInt(bookingIdString)<=0){
             System.out.println("Invalid booking id. Enter again: ");
             bookingIdString = sc.next();
         }

@@ -55,20 +55,20 @@ public class Bus {
         }
         return null;
     }
-    public void addSchedule(String source, String destination, String startTime, String endTime, List<String> days){
+    public boolean addSchedule(String source, String destination, String startTime, String endTime, List<String> days){
         for(Schedule_SourceDestinationTimeDaysPair schedule: schedules){
             for(Object day: schedule.getDays()){
                 if(days.contains((String)day)){
                     if(schedule.getStartTime().compareTo(schedule.getEndTime())<0) {
-                        if ((schedule.getStartTime().compareTo(startTime) <= 0 && schedule.getEndTime().compareTo(startTime) > 0) || (schedule.getStartTime().compareTo(endTime) < 0 && schedule.getEndTime().compareTo(endTime) > 0)) {
+                        if ((schedule.getStartTime().compareTo(startTime) <= 0 && schedule.getEndTime().compareTo(startTime) >= 0) || (schedule.getStartTime().compareTo(endTime) <= 0 && schedule.getEndTime().compareTo(endTime) >= 0)) {
                             System.out.println("Time slot collides with another schedule. Cannot add schedule.");
-                            return;
+                            return false;
                         }
                     }else{
                         String tmpEndTime = Integer.parseInt(schedule.getEndTime().split(":")[0])+24 + ":" + schedule.getEndTime().split(":")[1];
-                        if( (schedule.getStartTime().compareTo(startTime)<=0 && tmpEndTime.compareTo(startTime)>0) || (schedule.getStartTime().compareTo(endTime)<0 && tmpEndTime.compareTo(endTime)>0) || (schedule.getEndTime().compareTo(startTime) > 0)){
+                        if( (schedule.getStartTime().compareTo(startTime)<=0 && tmpEndTime.compareTo(startTime)>=0) || (schedule.getStartTime().compareTo(endTime)<=0 && tmpEndTime.compareTo(endTime)>=0) || (schedule.getEndTime().compareTo(startTime) >= 0)){
                             System.out.println("Time slot collides with another schedule. Cannot add schedule.");
-                            return;
+                            return false;
                         }
                     }
                 }
@@ -85,9 +85,9 @@ public class Bus {
         }
         for(Schedule_SourceDestinationTimeDaysPair schedule: schedules){
             for(String prevDay: prevDays){
-                if(schedule.getDays().contains(prevDay) && schedule.getStartTime().compareTo(schedule.getEndTime())>0 && schedule.getEndTime().compareTo(startTime)>0){
+                if(schedule.getDays().contains(prevDay) && schedule.getStartTime().compareTo(schedule.getEndTime())>=0 && schedule.getEndTime().compareTo(startTime)>=0){
                     System.out.println("Time slot collides with another schedule. Cannot add schedule.");
-                    return;
+                    return false;
                 }
             }
         }
@@ -97,6 +97,7 @@ public class Bus {
             SchedulesData.getAllSchedulesBusIdMap().put(id, schedules);
         }
         SchedulesData.getAllSchedules().add(new Schedule_SourceDestinationTimeDaysPair(source, destination, startTime, endTime, days));
+        return true;
     }
 
     public int getId() {

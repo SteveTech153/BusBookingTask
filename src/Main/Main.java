@@ -1,15 +1,8 @@
 package Main;
-import Data.BusesData;
-import Data.CitiesData;
-import System.CityManager;
-import System.UserManager;
-import System.Admin;
-import System.Booking;
-import System.Customer;
-import Utility.Validator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import Data.*;
+import System.*;
+import Utility.*;
+import java.util.*;
 
 public class Main {
 

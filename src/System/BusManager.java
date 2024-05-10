@@ -8,6 +8,7 @@ import java.util.Scanner;
 public interface BusManager {
     static Scanner sc = new Scanner(System.in);
     Validator validator = new Validator();
+
     public default void createBus(){
         System.out.println("Enter number of seats: ");
         String noOfSeatsString = sc.next();
@@ -26,7 +27,7 @@ public interface BusManager {
 
         System.out.println("Enter number of waiting list: ");
         String noOfWaitingListString = sc.next();
-        while(!(!validator.validateNoOfSeats(noOfWaitingListString) || !(Integer.parseInt(noOfWaitingListString)>0) || !(Integer.parseInt(noOfWaitingListString)<noOfSeats))){
+        while(!validator.validateInteger(noOfWaitingListString) || !(Integer.parseInt(noOfWaitingListString)>=0) || !(Integer.parseInt(noOfWaitingListString)<=noOfSeats)){
             System.out.println("Number of waiting list should be greater than or equal to 0 and should be less than or equal to total number of seats. Enter again: ");
             noOfWaitingListString = sc.next();
         }
@@ -69,7 +70,8 @@ public interface BusManager {
         }
         System.out.println("Available buses: ");
         for(int i=0; i<BusesData.getBusIdMap().size(); i++){
-            System.out.print((i+1) + "-> ");
+            Bus busTmp = BusesData.getBusIdMap().get(i+1);
+            System.out.print((i+1) + "-> No of seats: "+busTmp.getTotalSeats()+" No of waiting list: "+busTmp.getTotalNumberOfWaitingList()+" Schedules: ");
             BusesData.getBusIdMap().get(i+1).showSchedule();
         }
         System.out.println("");

@@ -1,0 +1,255 @@
+@startuml
+class Admin {
+    -static Scanner sc
+    -static final String password
+    -static Admin admin
+
+    +static Admin getAdmin(String)
+}
+
+class Booking {
+    -int id
+    -int busId
+    -int userId
+    -String date
+    -String source
+    -String destination
+    -String startTime
+    -String endTime
+    -String day
+    -int noOfConfirmedSeats
+    -int noOfWaitingListSeats
+    -static Scanner sc
+
+    +Booking(int, int, String, int, int, String, String, String, String)
+    +void showBooking()
+    +void viewDetails()
+    +String toString()
+    +int getId()
+    +int getBusId()
+    +String getSource()
+    +String getDestination()
+    +Bus getBus()
+    +User getUser()
+    +String getDate()
+    +String getStartTime()
+    +String getEndTime()
+    +int getUserId()
+    +void setDate(String)
+    +int getNoOfSeats()
+    +int getNoOfConfirmedSeats()
+    +void setNoOfConfirmedSeats(int)
+    +int getNoOfWaitingListSeats()
+    +void setNoOfWaitingListSeats(int)
+}
+
+
+interface BookingManager {
+    +boolean book(int, boolean)
+    +boolean book(int, int, String, String, String, int, String, Schedule_SourceDestinationTimeDaysPair, boolean)
+    +void cancelBooking(Integer, boolean)
+    +void cancelBooking(Integer, int, int, boolean)
+    +void requestChangeDate(Integer)
+    +void showAllBookings()
+}
+
+class BookingsData {
+    -static int numberOfBookings
+    -static List<Booking> bookings
+    -static HashMap<Integer, Booking> bookingMap
+    -static List<Booking> waitingList
+
+    +static int getNumberOfBookings()
+    +static void setNumberOfBookings(int)
+    +static void incrementNumberOfBookings()
+    +static List<Booking> getBookings()
+    +static void addBooking(Booking)
+    +static List<Booking> getWaitingList()
+    +static void addWaitingList(Booking)
+    +static void removeWaitingList(Booking)
+    +static HashMap<Integer, Booking> getBookingMap()
+}
+
+class Bus {
+    -int id
+    -HashMap<DateSchedulePair, Integer> bookedSeats
+    -HashMap<DateSchedulePair, Integer> numberOfWaitingList
+    -int totalSeats
+    -int totalNumberOfWaitingList
+    -List<Schedule_SourceDestinationTimeDaysPair> schedules
+
+    +Bus(int, int)
+    +int getAvailableSeats(DateSchedulePair)
+    +int getTotalAvailableSeats(DateSchedulePair)
+    +void setTotalSeats(int)
+    +void setBookedSeats(DateSchedulePair, int)
+    +boolean isWaitingListAvailable(DateSchedulePair)
+    +void showSchedule()
+    +Schedule_SourceDestinationTimeDaysPair getSchedule(String, String)
+    +void addSchedule(String, String, String, String, List<String>)
+    +int getId()
+    +void setTotalNumberOfWaitingList(int)
+    +int getTotalNumberOfWaitingList()
+    +void setNumberOfWaitingList(DateSchedulePair, int)
+    +int getNumberOfWaitingList(DateSchedulePair)
+    +int getAvailableSeatsForWaitingList(DateSchedulePair)
+    +int getBookedSeats(DateSchedulePair)
+}
+
+class BusesData {
+    -static int defaultSeats
+    -static int defaultWaitingList
+    -static int noOfBuses
+    -static HashMap<Integer, Bus> busIdMap
+
+    +static int getDefaultSeats()
+    +static void setDefaultSeats(int)
+    +static int getDefaultWaitingList()
+    +static void setDefaultWaitingList(int)
+    +static int getNoOfBuses()
+    +static void setNoOfBuses(int)
+    +static void incrementNoOfBuses()
+    +static HashMap<Integer, Bus> getBusIdMap()
+    +static void addBus(Bus)
+    +static Bus getBus(int)
+}
+
+interface BusManager {
+    +void createBus()
+    +void modifyBus(int, int, int)
+    +void deleteBus(int)
+    +void showAllBuses()
+}
+
+class CitiesData {
+    -static List<String> availableCities
+
+    +static List<String> getAvailableCities()
+    +static void setAvailableCities(List<String>)
+    +static void setCities(List<String>)
+}
+
+interface CityManager {
+    +void addCity(String)
+    +static void showAvailableCities()
+    +void removeCity(String)
+}
+class CreditsData {
+    -static int creditForCancellationOnSameDay
+    -static int creditForCancellationBefore
+
+    +static void setCreditForCancellationOnSameDay(int)
+    +static void setCreditForCancellationBefore(int)
+    +static int getCreditForCancellationOnSameDay()
+    +static int getCreditForCancellationBefore()
+}
+
+interface CreditsManager {
+    +void setCreditForCancellationOnSameDay(int)
+    +void setCreditForCancellationBefore(int)
+    +int getCreditForCancellationOnSameDay()
+    +int getCreditForCancellationBefore()
+}
+
+class DateSchedulePair<Da, Sc> {
+    -Da date
+    -Sc schedule
+
+    +DateSchedulePair(Da, Sc)
+    +String getDate()
+    +Schedule_SourceDestinationTimeDaysPair getSchedule()
+    +int hashCode()
+    +boolean equals(Object)
+}
+
+class Schedule_SourceDestinationTimeDaysPair<S, De, ST, ET, Da> {
+    -S source
+    -De destination
+    -ST startTime
+    -ET endTime
+    -Da days
+
+    +Schedule_SourceDestinationTimeDaysPair(S, De, ST, ET, Da)
+    +String getSource()
+    +String getDestination()
+    +String getStartTime()
+    +String getEndTime()
+    +ArrayList<String> getDays()
+}
+
+class SchedulesData {
+    -static int noOfSchedules
+    -static HashMap<Integer, List<Schedule_SourceDestinationTimeDaysPair>> allSchedulesBusIdMap
+    -static List<Schedule_SourceDestinationTimeDaysPair> allSchedules
+
+    +static int getNoOfSchedules()
+    +static void setNoOfSchedules(int)
+    +static void incrementNoOfSchedules()
+    +static HashMap<Integer, List<Schedule_SourceDestinationTimeDaysPair>> getAllSchedulesBusIdMap()
+    +static List<Schedule_SourceDestinationTimeDaysPair> getAllSchedules()
+}
+
+interface ScheduleManager {
+    +void assignSourceDestinationTimeToBus()
+}
+
+interface UserManager {
+    +static User findUser(String)
+    +User getUser(int)
+    +void showAllUsers()
+}
+
+class UsersData {
+    -static int numberOfUsers
+    -static HashMap<Integer, User> users
+
+    +static int getNumberOfUsers()
+    +static void setNumberOfUsers(int)
+    +static void incrementNumberOfUsers()
+    +static HashMap<Integer, User> getUsers()
+    +static void addUser(User)
+    +static User getUser(int)
+}
+
+class User {
+    -String username
+    -int id
+    -int credit
+    -List<Booking> bookings
+
+    +User(String)
+    +boolean viewBookings()
+    +String getUserName()
+    +void addBooking(Booking)
+    +Booking getBooking(int)
+    +void removeBooking(Booking)
+    +void addCredit(int)
+    +int getCredit()
+    +void reduceCredit(int)
+    +void setCredit(int)
+    +int getId()
+}
+
+UserManager <|.. Admin
+UserManager ..> User
+UsersData ..> UserManager
+UsersData o-- User
+CitiesData ..> CityManager
+BusManager <|.. Admin
+BusesData ..> BusManager
+BusManager ..> Bus
+BusesData o-- Bus
+DateSchedulePair o-- Bus
+BookingManager <|.. Admin
+BookingManager ..> Booking
+BookingsData ..> BookingManager
+BookingsData o-- Booking
+CreditsManager <|.. Admin
+CreditsData ..> CreditsManager
+ScheduleManager <|.. Admin
+ScheduleManager ..> Schedule_SourceDestinationTimeDaysPair
+SchedulesData ..> ScheduleManager
+SchedulesData o-- Schedule_SourceDestinationTimeDaysPair
+BookingManager <|.. User
+CityManager <|.. Admin
+@enduml

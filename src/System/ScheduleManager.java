@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface ScheduleManager {
-    static Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
     public default void assignSourceDestinationTimeToBus(){
         System.out.println("Available buses: ");
         for(int i = 0; i< BusesData.getBusIdMap().size(); i++){
@@ -100,7 +100,10 @@ public interface ScheduleManager {
         List<String> days = new ArrayList<>();
         if(cnt==7){
             days.addAll(new ArrayList<>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")));
-            BusesData.getBusIdMap().get(busId).addSchedule(source, destination, startTime, endTime, days);
+            if(assignSourceDestinationTimeToBus(source, destination, startTime, endTime, days, busId))
+                System.out.println("Schedule added successfully");
+            else
+                System.out.println("Schedule addition failed");
             return;
         }
         for (int i = 0; i < cnt; i++) {
@@ -122,7 +125,6 @@ public interface ScheduleManager {
     }
 
     public default boolean assignSourceDestinationTimeToBus(String source, String destination, String startTime, String endTime, List<String> days, int busId){
-        BusesData.getBusIdMap().get(busId).addSchedule(source, destination, startTime, endTime, days);
-        return true;
+        return BusesData.getBusIdMap().get(busId).addSchedule(source, destination, startTime, endTime, days);
     }
 }
