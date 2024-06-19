@@ -54,7 +54,7 @@ public class Main {
                         if(admin==null){
                             System.out.println("Invalid username or password");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if(choiceTmp.equals("0")){
                                 break;
@@ -92,7 +92,7 @@ public class Main {
                                     if (!validator.validateCity(city)) {
                                         System.out.println("Invalid city. City should contain only alphabets and should be between length 3 and 15");
                                         System.out.println("Press 0 to exit");
-                                        System.out.println("Press anything to try again");
+                                        System.out.println("Press any other digit or letter or symbol to try again");
                                         String choiceTmp = scanner.next();
                                         if (choiceTmp.equals("0")) {
                                             break;
@@ -103,7 +103,7 @@ public class Main {
                                     invalidCity = !admin.addCity(city.toLowerCase());
                                     if(invalidCity){
                                         System.out.println("Press 0 to exit");
-                                        System.out.println("Press anything to try again");
+                                        System.out.println("Press any other digit or letter or symbol to try again");
                                         String choiceTmp = scanner.next();
                                         if (choiceTmp.equals("0")) {
                                             break;
@@ -125,7 +125,7 @@ public class Main {
                                     }
                                     if(CitiesData.getAvailableCities().isEmpty())
                                     {
-                                        System.out.println("No Bus is available");
+                                        System.out.println("No cities available");
                                         break;
                                     }
                                     System.out.println("Enter city: ");
@@ -133,7 +133,7 @@ public class Main {
                                     cityRemoved = admin.removeCity(city1.toLowerCase());
                                     if (!cityRemoved) {
                                         System.out.println("Press 0 to exit");
-                                        System.out.println("Press anything to try again");
+                                        System.out.println("Press any other digit or letter or symbol to try again");
                                         String choiceTmp = scanner.next();
                                         if (choiceTmp.equals("0")) {
                                             break;
@@ -167,7 +167,7 @@ public class Main {
                                     busDeleted = admin.deleteBus(busId);
                                     if (!busDeleted) {
                                         System.out.println("Press 0 to exit");
-                                        System.out.println("Press anything to try again");
+                                        System.out.println("Press any other digit or letter or symbol to try again");
                                         String choiceTmp = scanner.next();
                                         if (choiceTmp.equals("0")) {
                                             break;
@@ -212,7 +212,7 @@ public class Main {
                                     busModified = admin.modifyBus(busId1, seats, waitingList);
                                     if (!busModified) {
                                         System.out.println("Press 0 to exit");
-                                        System.out.println("Press anything to try again");
+                                        System.out.println("Press any other digit or letter or symbol to try again");
                                         String choiceTmp = scanner.next();
                                         if (choiceTmp.equals("0")) {
                                             break;
@@ -224,16 +224,16 @@ public class Main {
                             case "8":
                                 System.out.println("Enter credit to set for cancellation on the day of journey: ");
                                 String creditString = scanner.next();
-                                while (!validator.validateInteger(creditString)) {
-                                    System.out.println("Invalid credit. Enter again: ");
+                                while (!validator.validateCredit(creditString)) {
+                                    System.out.println("Invalid credit. Credit should be lesser than 100 and greater than 0. Enter again: ");
                                     creditString = scanner.next();
                                 }
                                 int credit = Integer.parseInt(creditString);
                                 admin.setCreditForCancellationOnSameDay(credit);
                                 System.out.println("Enter credit to set for cancellation before the day of journey: ");
                                 String credit1String = scanner.next();
-                                while (!validator.validateInteger(credit1String)) {
-                                    System.out.println("Invalid credit. Enter again: ");
+                                while (!validator.validateCredit(credit1String)) {
+                                    System.out.println("Invalid credit. Credit should be lesser than 100 and greater than 0. Enter again: ");
                                     credit1String = scanner.next();
                                 }
                                 int credit1 = Integer.parseInt(credit1String);
@@ -265,7 +265,7 @@ public class Main {
                         if (!validator.validateUsername(username)) {
                             System.out.println("Invalid username. Username should start with alphabet, should contain only alphabets and numbers and should be between length 6 and 15");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if (choiceTmp.equals("0")) {
                                 break;
@@ -281,7 +281,7 @@ public class Main {
                         } catch (IllegalAccessException e) {
                             System.out.println("Invalid password");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if (choiceTmp.equals("0")) {
                                 break;
@@ -305,7 +305,7 @@ public class Main {
                         if(customer==null){
                             System.out.println("Invalid username or password");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if(choiceTmp.equals("0")){
                                 break;
@@ -336,7 +336,16 @@ public class Main {
                                 System.out.println("");
                                 break;
                             case "2":
-                                customer.book(customer.getId(), false);
+                                boolean booked = customer.book(customer.getId(), false);
+                                while(!booked){
+                                    System.out.println("Press 0 to exit");
+                                    System.out.println("Press any other digit or letter or symbol to try again");
+                                    String choiceTmp = scanner.next();
+                                    if(choiceTmp.equals("0")){
+                                        break;
+                                    }
+                                    booked = customer.book(customer.getId(), false);
+                                }
                                 System.out.println("");
                                 break;
                             case "3":
@@ -349,7 +358,12 @@ public class Main {
                                 break;
                             case "5":
                                 System.out.println("Enter booking id: ");
-                                int bookingId = scanner.nextInt();
+                                String bookingIdString = scanner.next();
+                                while (!validator.validateInteger(bookingIdString)) {
+                                    System.out.println("Invalid choice. Enter again: ");
+                                    bookingIdString = scanner.next();
+                                }
+                                int bookingId = Integer.parseInt(bookingIdString);
                                 Booking booking = customer.getBooking(bookingId);
                                 if(booking!=null)
                                     customer.getBooking(bookingId).viewDetails();
@@ -378,7 +392,7 @@ public class Main {
                         if (!validator.validateUsername(username)) {
                             System.out.println("Invalid username. Username should start with alphabet, should contain only alphabets and numbers and should be between length 6 and 15");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if (choiceTmp.equals("0")) {
                                 break;
@@ -388,7 +402,7 @@ public class Main {
                         }else if(UserManager.findUser(username, null)!=null){
                             System.out.println("Username already exists");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if (choiceTmp.equals("0")) {
                                 break;
@@ -401,7 +415,7 @@ public class Main {
                         if (!validator.validatePassword(password)) {
                             System.out.println("Invalid password. Password should contain at least one uppercase, one lowercase, one number and should be between length 6 and 15");
                             System.out.println("Press 0 to exit");
-                            System.out.println("Press anything to try again");
+                            System.out.println("Press any other digit or letter or symbol to try again");
                             String choiceTmp = scanner.next();
                             if (choiceTmp.equals("0")) {
                                 break;

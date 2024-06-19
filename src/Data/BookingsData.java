@@ -6,10 +6,11 @@ import java.util.List;
 import System.*;
 
 public class BookingsData {
-    static int numberOfBookings = 0;
-    static List<Booking> bookings = new ArrayList<>();
-    static HashMap<Integer, Booking> bookingMap = new HashMap<>();
-    static List<Booking> waitingList = new ArrayList<>();
+    private static int numberOfBookings = 0;
+    private static List<Booking> bookings = new ArrayList<>();
+    private static HashMap<Integer, Booking> bookingMap = new HashMap<>();
+    private static List<Booking> waitingList = new ArrayList<>();
+
     public static int getNumberOfBookings() {
         return numberOfBookings;
     }

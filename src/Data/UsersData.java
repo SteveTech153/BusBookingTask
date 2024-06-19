@@ -4,8 +4,9 @@ import java.util.HashMap;
 import System.*;
 
 public class UsersData {
-    static int numberOfUsers = 0;
-    static HashMap<Integer, User> users = new HashMap<>();
+    private static int numberOfUsers = 0;
+    private static HashMap<Integer, User> users = new HashMap<>();
+
     public static int getNumberOfUsers() {
         return numberOfUsers;
     }
@@ -24,5 +25,4 @@ public class UsersData {
     public static User getUser(int id) {
         return users.get(id);
     }
-
 }

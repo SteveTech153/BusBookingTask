@@ -16,7 +16,6 @@ public class Validator {
                 password.matches(".*[0-9].*");
     }
 
-
     public boolean validateCity(String city) {
         if (city.length() < 3 || city.length() > 15 || !Character.isAlphabetic(city.charAt(0)) || !(city.matches("[a-zA-Z]+"))) {
             return false;
@@ -41,5 +40,10 @@ public class Validator {
             return false;
         }
         return true;
+    }
+    public boolean validateCredit(String credit){
+        if(validateInteger(credit) && Integer.parseInt(credit) >= 0 && Integer.parseInt(credit) <= 100)
+            return true;
+        return false;
     }
 }

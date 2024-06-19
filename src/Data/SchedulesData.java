@@ -6,9 +6,10 @@ import java.util.List;
 import System.*;
 
 public class SchedulesData {
-    static int noOfSchedules = 0;
-    static HashMap<Integer, List<Schedule_SourceDestinationTimeDaysPair>> allSchedulesBusIdMap = new HashMap<>();
-    static List<Schedule_SourceDestinationTimeDaysPair> allSchedules = new ArrayList<>();
+    private static int noOfSchedules = 0;
+    private static HashMap<Integer, List<Schedule_SourceDestinationTimeDaysPair>> allSchedulesBusIdMap = new HashMap<>();
+    private static List<Schedule_SourceDestinationTimeDaysPair> allSchedules = new ArrayList<>();
+
     public static int getNoOfSchedules() {
         return noOfSchedules;
     }

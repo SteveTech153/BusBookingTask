@@ -5,10 +5,11 @@ import System.Bus;
 import java.util.HashMap;
 
 public class BusesData {
-    static int defaultSeats = 20;
-    static int defaultWaitingList = 5;
-    static int noOfBuses = 0;
-    static HashMap<Integer, Bus> busIdMap = new HashMap<>();
+    private static int defaultSeats = 20;
+    private static int defaultWaitingList = 5;
+    private static int noOfBuses = 0;
+    private static HashMap<Integer, Bus> busIdMap = new HashMap<>();
+
     public static int getDefaultSeats() {
         return defaultSeats;
     }

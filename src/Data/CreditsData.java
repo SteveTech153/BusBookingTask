@@ -1,8 +1,9 @@
 package Data;
 
 public class CreditsData {
-    static int creditForCancellationOnSameDay = 50;
-    static int creditForCancellationBefore = 80;
+    private static int creditForCancellationOnSameDay = 50;
+    private static int creditForCancellationBefore = 80;
+
     public static void setCreditForCancellationOnSameDay(int creditForCancellationOnSameDay) {
         CreditsData.creditForCancellationOnSameDay = creditForCancellationOnSameDay;
     }

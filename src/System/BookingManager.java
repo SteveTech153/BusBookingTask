@@ -1,8 +1,6 @@
 package System;
-
 import Data.*;
 import Utility.Validator;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +10,7 @@ import java.util.*;
 public interface BookingManager {
     Scanner sc = new Scanner(System.in);
     Validator validator = new Validator();
+
     public default boolean book(int userId, boolean changeDate) {
         System.out.println("Available cities : ");
         for(int i = 0; i< CitiesData.getAvailableCities().size(); i++) {
@@ -200,7 +199,7 @@ public interface BookingManager {
         Booking booking = customer.getBooking(bookingId);
         if(numberOfSeatsToCancel <= booking.getNoOfWaitingListSeats()){
             Bus bus = BusesData.getBus(booking.getBusId());
-            Schedule_SourceDestinationTimeDaysPair schedule = bus.getSchedule(booking.getStartTime(), booking.getDate());
+            Schedule_SourceDestinationTimeDaysPair schedule =  bus.getSchedule(booking.getStartTime(), booking.getDate());
             DateSchedulePair dateSchedulePair = new DateSchedulePair<>(booking.getDate(), schedule);
             bus.setNumberOfWaitingList(dateSchedulePair, bus.getNumberOfWaitingList(dateSchedulePair)-numberOfSeatsToCancel);
             booking.setNoOfWaitingListSeats(booking.getNoOfWaitingListSeats()-numberOfSeatsToCancel);

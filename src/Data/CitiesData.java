@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CitiesData {
-    static List<String> availableCities = new ArrayList<>();
+    private static List<String> availableCities = new ArrayList<>();
+
     public static List<String> getAvailableCities() {
         return availableCities;
     }
